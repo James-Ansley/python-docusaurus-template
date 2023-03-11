@@ -17,8 +17,8 @@ const config = {
     favicon: 'img/favicon.ico',
 
     // The url for your site: <url>/<baseUrl>/
-    url: 'https://your-docusaurus-test-site.com',  // set this
-    baseUrl: '/',  // set this
+    url: 'https://james-ansley.github.io',  // set this
+    baseUrl: '/python-docusaurus-template/',  // set this
 
     // (optional) GitHub pages deployment config.
     organizationName: 'James-Ansley',  // set this – GitHub Org or Username
