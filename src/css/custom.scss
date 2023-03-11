@@ -1,0 +1,271 @@
+// See: https://docusaurus.io/docs/styling-layout#styling-your-site-with-infima
+// For a colour picker to select your own theme colour
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+:root {
+  --text-color: #213547;
+  --text-color-alt: #273f54;
+  --text-code-error: hsla(0, 100%, 50%, 90%);
+
+  --divider-color: rgba(60, 60, 60, 0.12);
+  --divider-color-alt: hsla(0, 0%, 40%, 0.08);
+  --ifm-background-color: #ffffff;
+  --ifm-background-color-trans: rgba(255, 255, 255, 0.95);
+  --ifm-background-surface-color: #f9f9f9;
+  --ifm-background-surface-color-alt: hsl(0, 0%, 91%);
+
+  --ifm-font-family: Helvetica, sans-serif;
+  --ifm-heading-font-family: var(--ifm-font-family);
+
+  --ifm-button-border-radius: 2.5em;
+
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  --code-background: #fafafa;
+}
+
+html[data-theme="dark"] {
+  --text-color: rgba(255, 255, 255, 0.85);
+  --text-color-faded: rgba(255, 255, 255, 0.8);
+  --text-color-alt: rgba(217, 217, 217, 0.85);
+  --divider-color: hsla(0, 0%, 33%, 0.48);
+  --divider-color-alt: hsla(0, 0%, 25%, 0.40);
+  --text-code-error: #B83426;
+
+  --ifm-background-color: #242424;
+  --ifm-background-color-trans: rgba(36, 36, 36, 0.95);
+  --ifm-background-surface-color: #1a1a1a;
+
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+
+  --code-background: #323232;
+}
+
+body {
+  text-align: justify;
+  color: var(--text-color);
+}
+
+.main-wrapper > div {
+  flex: fit-content;
+}
+
+
+.theme-doc-markdown {
+  max-width: 79ch;
+  font-size: 1rem;
+  margin: auto;
+  font-family: var(--ifm-font-family);
+
+  a {
+    text-decoration: underline;
+  }
+
+  h1 {
+    color: currentColor;
+  }
+
+  p {
+    margin: 1em 0;
+    line-height: 1.5em;
+  }
+
+  h1:first-child {
+    font-size: 2em;
+    margin: 0.5em 0 0;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    margin: 2em 0 0.67em;
+    padding-top: 1em;
+    border-top: 1px solid var(--divider-color);
+  }
+
+  h3 {
+    font-size: 1.25em;
+    margin: 1.5em 0 0;
+
+    + h4 {
+      margin-top: 0.5em;
+    }
+  }
+
+  h4 {
+    margin: 1.5em 0 0;
+    font-size: 1.1em;
+
+    + p {
+      margin-top: 0.5em;
+    }
+  }
+
+  h5, h6 {
+    margin: 2em 0 0;
+    font-size: 1em;
+    color: var(--text-color-alt);
+
+    + p {
+      margin-top: 0.3em;
+    }
+  }
+
+  pre {
+    background-color: var(--code-background);
+  }
+}
+
+html[data-theme='dark'] .diagram {
+  filter: invert(0.92) !important;
+}
+
+// Code Blocks
+:not(pre) > code {
+  border: none;
+  border-radius: 0.25em;
+  padding: 3px;
+}
+
+pre > code {
+  padding: 0.5em 1em !important;
+}
+
+// Footnotes
+.footnotes {
+  margin-top: 3em;
+
+  p {
+    font-size: .95em !important;
+    margin: 0.5em 0;
+  }
+
+  .footnote-item {
+    margin-bottom: 1.5em;
+  }
+
+  .footnote-backref {
+    font-family: monospace;
+    font-size: 1em;
+    padding-left: 0.5ch;
+  }
+}
+
+// Sidebar
+.theme-doc-sidebar-container {
+  background-color: var(--ifm-background-surface-color);
+
+  * {
+    font-size: 0.99em;
+  }
+
+  .theme-doc-sidebar-item-category {
+    font-weight: 600;
+  }
+
+  .theme-doc-sidebar-item-category-level-1 {
+    padding-top: 0.3em;
+    margin-bottom: 0.3em;
+    border-top: var(--divider-color) solid 1px;
+  }
+
+  .theme-doc-sidebar-item-link-level-1 {
+    padding-top: 0.3em;
+    margin-bottom: 0.3em;
+    border-top: var(--divider-color) solid 1px;
+  }
+
+  .theme-doc-sidebar-item-link-level-1:first-child,
+  .theme-doc-sidebar-item-category-level-1:first-child {
+    border-top: none;
+  }
+
+  .theme-doc-sidebar-item-link * {
+    font-weight: normal;
+  }
+}
+
+.navbar {
+  background-color: var(--ifm-background-color-trans);
+}
+
+.footer {
+  --ifm-footer-background-color: var(--ifm-background-surface-color);
+}
+
+.table-of-contents {
+  text-align: left;
+}
+
+.pagination-nav,
+.theme-doc-breadcrumbs,
+.theme-doc-toc-mobile {
+  font-family: var(--ifm-font-family);
+  max-width: 80ch;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.theme-admonition {
+  font-size: 0.9rem;
+  padding: 1em;
+
+  p:first-child {
+    margin-top: 0;
+  }
+}
+
+// From: https://kudakurage.com/ligature_symbols/
+@font-face {
+  font-family: 'LigatureSymbols';
+  src: url('/fonts/LigatureSymbols/LigatureSymbols-2.11.eot');
+  src: url('/fonts/LigatureSymbols/LigatureSymbols-2.11.eot?#iefix') format('embedded-opentype'),
+  url('/fonts/LigatureSymbols/LigatureSymbols-2.11.woff') format('woff'),
+  url('/fonts/LigatureSymbols/LigatureSymbols-2.11.ttf') format('truetype'),
+  url('/fonts/LigatureSymbols/LigatureSymbols-2.11.svg#LigatureSymbols') format('svg');
+  src: url('/fonts/LigatureSymbols/LigatureSymbols-2.11.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.lsf, .lsf-icon:before {
+  font-feature-settings: "liga" 1;
+  font-family: 'LigatureSymbols';
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.lsf-icon:before {
+  content: attr(title);
+  margin-right: 0.3em;
+  font-size: 130%;
+}
+
