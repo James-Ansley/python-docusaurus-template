@@ -39,3 +39,5 @@ the [Docusaurus theme colour picker](https://docusaurus.io/docs/styling-layout#s
 - Change the logo and favicon in the `static/img` directory to your own logo
   and favicon. If you change the names of these files, update them
   in `docusaurus.config.js`.
+- Update the name in LICENSE (or the licence if you want to use a different 
+  license)
