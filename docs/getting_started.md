@@ -8,6 +8,8 @@ Read the [Docusaurus](https://docusaurus.io/) documentation for information
 on how Docusaurus works. The following sections only outline the _minimum
 setup_ needed to set this template up for your own site.
 
+Run `npm install` and `npm run start` to get started with development.
+
 ## Config
 
 After cloning this template repo, you will need to replace all the
