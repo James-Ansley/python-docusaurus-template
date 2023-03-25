@@ -29,6 +29,11 @@
     opacity: 100%;
 }
 
+.icon-button:focus,
+.icon-button:active {
+    opacity: 100%;
+}
+
 .output-window {
     border: var(--divider-color-alt) solid 1px;
     border-top: var(--divider-color) solid 1px;
