@@ -46,7 +46,7 @@ The `CodeEditor` component is located in `src/components/CodeEditor.js`.
 This code editor uses font files located in `static/fonts` for the run and
 reset buttons. Modifying this will alter all code editing windows.
 
-Cod windows are automatically inserted into documents by the modified
+Code windows are automatically inserted into documents by the modified
 `CodeBlock` theme component located in `src/theme/CodeBlock/index.js`. This
 is a good place to pass any global/default props to the `CodeEditor`
 component – for example, globally setting the `showButtons` prop to have
