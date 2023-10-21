@@ -1,7 +1,7 @@
 # Python Docusaurus Template
 
 A no-nonsense markdown-only template with runnable and editable Python code
-blocks.
+blocks. Now with [Docusaurus 3.0](https://docusaurus.io/blog/releases/3.0)!
 
 [Try it here](https://james-ansley.github.io/python-docusaurus-template/)
 
@@ -29,7 +29,7 @@ placeholder values in the `docusaurus.config.js` folder. The main fields
 that you will definitely need to replace are commented with "`set this`".
 
 Have a look at the
-[Docusauraus configuration docs](https://docusaurus.io/docs/api/docusaurus-config)
+[Docusaurus configuration docs](https://docusaurus.io/docs/api/docusaurus-config)
 to see if there are any other additional configuration options you would
 need for your purpose.
 

@@ -34,6 +34,7 @@
   --ifm-background-color-trans: rgba(255, 255, 255, 0.95);
   --ifm-background-surface-color: #f9f9f9;
   --ifm-background-surface-color-alt: hsl(0, 0%, 91%);
+  --ifm-footer-background-color: var(--ifm-background-surface-color);
 
   --ifm-font-family: Helvetica, sans-serif;
   --ifm-heading-font-family: var(--ifm-font-family);
@@ -56,6 +57,7 @@ html[data-theme="dark"] {
   --ifm-background-color: #242424;
   --ifm-background-color-trans: rgba(36, 36, 36, 0.95);
   --ifm-background-surface-color: #1a1a1a;
+  --ifm-footer-background-color: var(--ifm-background-surface-color);
 
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 
@@ -209,10 +211,6 @@ pre > code {
   background-color: var(--ifm-background-color-trans);
 }
 
-.footer {
-  --ifm-footer-background-color: var(--ifm-background-surface-color);
-}
-
 .table-of-contents {
   text-align: left;
 }
@@ -268,4 +266,3 @@ pre > code {
   margin-right: 0.3em;
   font-size: 130%;
 }
-

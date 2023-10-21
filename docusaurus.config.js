@@ -4,12 +4,9 @@
 // For other configuration options,
 // see: https://docusaurus.io/docs/api/themes/configuration
 
-
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
-const math = require('remark-math');
-const katex = require('rehype-katex');
+import {themes as prismThemes} from 'prism-react-renderer';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -33,9 +30,28 @@ const config = {
         locales: ['en'],
     },
 
+    presets: [
+        [
+            'classic',
+            /** @type {import('@docusaurus/preset-classic').Options} */
+            ({
+                docs: {
+                    sidebarPath: './sidebars.js',
+                    remarkPlugins: [remarkMath],
+                    rehypePlugins: [rehypeKatex],
+                },
+                theme: {
+                    customCss: './src/css/custom.scss',
+                },
+            }),
+        ],
+    ],
+
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
+            // set this - Replace with your project's social card
+            image: 'img/logo.svg',
             docs: {
                 sidebar: {
                     hideable: true,
@@ -54,7 +70,7 @@ const config = {
                         type: 'doc',
                         docId: 'intro',  // set this to your main docs page name
                         position: 'left',
-                        label: 'Tutorial',
+                        label: 'Get Started',
                     },
                     {
                         href: 'https://github.com/James-Ansley/python-docusaurus-template',  // set this
@@ -69,75 +85,22 @@ const config = {
                 style: 'light',
                 links: [
                     {
-                        title: 'Docs',
-                        items: [
-                            {
-                                label: 'Tutorial',
-                                to: '/docs/intro',
-                            },
-                        ],
+                        label: 'Get Started',
+                        to: '/docs/intro',
                     },
                     {
-                        title: 'Community',
-                        items: [
-                            {
-                                label: 'Stack Overflow',
-                                href: 'https://stackoverflow.com',
-                            },
-                            {
-                                label: 'Discord',
-                                href: 'https://discordapp.com',
-                            },
-                            {
-                                label: 'Twitter',
-                                href: 'https://twitter.com',
-                            },
-                        ],
-                    },
-                    {
-                        title: 'More',
-                        items: [
-                            {
-                                label: 'GitHub',
-                                href: 'https://github.com',
-                            },
-                        ],
+                        label: 'GitHub',
+                        href: 'https://github.com/James-Ansley/python-docusaurus-template',
                     },
                 ],
                 // set this
                 copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
             },
             prism: {
-                theme: lightCodeTheme,
-                darkTheme: darkCodeTheme,
+                theme: prismThemes.github,
+                darkTheme: prismThemes.dracula,
             },
         }),
-
-    presets: [
-        [
-            'classic',
-            /** @type {import('@docusaurus/preset-classic').Options} */
-            ({
-                docs: {
-                    sidebarPath: require.resolve('./sidebars.js'),
-                    remarkPlugins: [math],
-                    rehypePlugins: [katex],
-                },
-                blog: false,
-                theme: {
-                    customCss: [require.resolve('./src/css/custom.scss')],
-                },
-            }),
-        ],
-    ],
-
-    themes: [
-        [
-            require.resolve("@easyops-cn/docusaurus-search-local"),
-            /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
-            ({hashed: true}),
-        ],
-    ],
 
     stylesheets: [
         {
@@ -162,8 +125,19 @@ const config = {
                     }
                 }
             }
-        }
+        },
+    ],
+
+    themes: [
+        [
+            require.resolve("@easyops-cn/docusaurus-search-local"),
+            /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+            ({
+                hashed: true,
+                indexBlog: false,
+            }),
+        ],
     ],
 };
 
-module.exports = config;
+export default config;
