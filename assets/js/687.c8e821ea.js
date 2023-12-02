@@ -368,7 +368,7 @@ function generateUUID() {
 
 //# sourceMappingURL=comlink.mjs.map
 
-;// CONCATENATED MODULE: ./node_modules/react-py/dist/workers/python-worker.js
+;// CONCATENATED MODULE: ./node_modules/react-py/dist/workers/python-console-worker.js
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -405,42 +405,109 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-importScripts('https://cdn.jsdelivr.net/pyodide/v0.22.0/full/pyodide.js');
+var __values = (undefined && undefined.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+var __read = (undefined && undefined.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+importScripts('https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js');
 // Monkey patch console.log to prevent the script from outputting logs
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-console.log = function () { };
+if (self.location.hostname !== 'localhost') {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    console.log = function () { };
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    console.error = function () { };
+}
 
+var pythonConsole;
+var reactPyModule = {
+    getInput: function (id, prompt) {
+        var request = new XMLHttpRequest();
+        // Synchronous request to be intercepted by service worker
+        request.open('GET', "/react-py-get-input/?id=".concat(id, "&prompt=").concat(prompt), false);
+        request.send(null);
+        return request.responseText;
+    }
+};
 var python = {
     init: function (stdout, onLoad, packages) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, micropip, version;
+            var _a, micropip, id, version, namespace, initConsoleCode, patchInputCode, reprShorten, banner, awaitFut, pyconsole, clearConsole;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _a = self;
-                        return [4 /*yield*/, self.loadPyodide({
-                                stdout: stdout
-                            })];
+                        return [4 /*yield*/, self.loadPyodide({})];
                     case 1:
                         _a.pyodide = _b.sent();
-                        if (!(packages[0].length > 0)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, self.pyodide.loadPackage(packages[0])];
+                        return [4 /*yield*/, self.pyodide.loadPackage(['pyodide-http'])];
                     case 2:
                         _b.sent();
-                        _b.label = 3;
+                        if (!(packages[0].length > 0)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, self.pyodide.loadPackage(packages[0])];
                     case 3:
-                        if (!(packages[1].length > 0)) return [3 /*break*/, 6];
-                        return [4 /*yield*/, self.pyodide.loadPackage(['micropip'])];
+                        _b.sent();
+                        _b.label = 4;
                     case 4:
+                        if (!(packages[1].length > 0)) return [3 /*break*/, 7];
+                        return [4 /*yield*/, self.pyodide.loadPackage(['micropip'])];
+                    case 5:
                         _b.sent();
                         micropip = self.pyodide.pyimport('micropip');
                         return [4 /*yield*/, micropip.install(packages[1])];
-                    case 5:
-                        _b.sent();
-                        _b.label = 6;
                     case 6:
+                        _b.sent();
+                        _b.label = 7;
+                    case 7:
+                        id = self.crypto.randomUUID();
                         version = self.pyodide.version;
-                        onLoad({ version: version });
+                        self.pyodide.registerJsModule('react_py', reactPyModule);
+                        namespace = self.pyodide.globals.get('dict')();
+                        initConsoleCode = "\nimport pyodide_http\npyodide_http.patch_all()\n\nimport sys\nfrom pyodide.ffi import to_js\nfrom pyodide.console import PyodideConsole, repr_shorten, BANNER\nimport __main__\nBANNER = \"Welcome to the Pyodide terminal emulator \uD83D\uDC0D\\n\" + BANNER\npyconsole = PyodideConsole(__main__.__dict__)\nimport builtins\nasync def await_fut(fut):\n  res = await fut\n  if res is not None:\n    builtins._ = res\n  return to_js([res], depth=1)\ndef clear_console():\n  pyconsole.buffer = []\n";
+                        return [4 /*yield*/, self.pyodide.runPythonAsync(initConsoleCode, { globals: namespace })];
+                    case 8:
+                        _b.sent();
+                        patchInputCode = "\nimport sys, builtins\nimport react_py\n__prompt_str__ = \"\"\ndef get_input(prompt=\"\"):\n    global __prompt_str__\n    __prompt_str__ = prompt\n    print(prompt, end=\"\")\n    s = react_py.getInput(\"".concat(id, "\", prompt)\n    print()\n    return s\nbuiltins.input = get_input\nsys.stdin.readline = lambda: react_py.getInput(\"").concat(id, "\", __prompt_str__)\n");
+                        return [4 /*yield*/, self.pyodide.runPythonAsync(patchInputCode, { globals: namespace })];
+                    case 9:
+                        _b.sent();
+                        reprShorten = namespace.get('repr_shorten');
+                        banner = namespace.get('BANNER');
+                        awaitFut = namespace.get('await_fut');
+                        pyconsole = namespace.get('pyconsole');
+                        clearConsole = namespace.get('clear_console');
+                        namespace.destroy();
+                        // eslint-disable-next-line camelcase
+                        pyconsole.stdout_callback = stdout;
+                        pythonConsole = {
+                            reprShorten: reprShorten,
+                            awaitFut: awaitFut,
+                            pyconsole: pyconsole,
+                            clearConsole: clearConsole
+                        };
+                        onLoad({ id: id, version: version, banner: banner });
                         return [2 /*return*/];
                 }
             });
@@ -448,12 +515,67 @@ var python = {
     },
     run: function (code) {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, self.pyodide.runPythonAsync(code)];
+            var state, _a, _b, line, fut, wrapped, _c, value, error_1, message, e_1_1;
+            var e_1, _d;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
+                    case 0:
+                        if (!pythonConsole) {
+                            throw new Error('Console has not been initialised');
+                        }
+                        if (code === undefined) {
+                            throw new Error('No code to push');
+                        }
+                        _e.label = 1;
                     case 1:
-                        _a.sent();
-                        return [2 /*return*/];
+                        _e.trys.push([1, 9, 10, 11]);
+                        _a = __values(code.split('\n')), _b = _a.next();
+                        _e.label = 2;
+                    case 2:
+                        if (!!_b.done) return [3 /*break*/, 8];
+                        line = _b.value;
+                        fut = pythonConsole.pyconsole.push(line);
+                        state = fut.syntax_check;
+                        wrapped = pythonConsole.awaitFut(fut);
+                        _e.label = 3;
+                    case 3:
+                        _e.trys.push([3, 5, 6, 7]);
+                        return [4 /*yield*/, wrapped];
+                    case 4:
+                        _c = __read.apply(void 0, [_e.sent(), 1]), value = _c[0];
+                        if (self.pyodide.isPyProxy(value)) {
+                            value.destroy();
+                        }
+                        return [3 /*break*/, 7];
+                    case 5:
+                        error_1 = _e.sent();
+                        if (error_1.constructor.name === 'PythonError') {
+                            message = fut.formatted_error || error_1.message;
+                            return [2 /*return*/, { state: state, error: message.trimEnd() }];
+                        }
+                        else {
+                            throw error_1;
+                        }
+                        return [3 /*break*/, 7];
+                    case 6:
+                        fut.destroy();
+                        wrapped.destroy();
+                        return [7 /*endfinally*/];
+                    case 7:
+                        _b = _a.next();
+                        return [3 /*break*/, 2];
+                    case 8: return [3 /*break*/, 11];
+                    case 9:
+                        e_1_1 = _e.sent();
+                        e_1 = { error: e_1_1 };
+                        return [3 /*break*/, 11];
+                    case 10:
+                        try {
+                            if (_b && !_b.done && (_d = _a.return)) _d.call(_a);
+                        }
+                        finally { if (e_1) throw e_1.error; }
+                        return [7 /*endfinally*/];
+                    case 11: return [2 /*return*/, { state: state }];
                 }
             });
         });
